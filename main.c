@@ -44,15 +44,19 @@ int main(int ac, char **av)
 
 	while (1)
 	{
-		printf("$ ");
-		fflush(stdout);
+		if (isatty(STDIN_FILENO))
+        {
+            printf("$ ");
+            fflush(stdout);
+        }
 
 		read = getline(&line, &len, stdin);  /* Récupérer la ligne d'entrée */
 		/*handle_read_error(line, read);*/
 
 		if (read == -1) {
 			free(line);
-			perror("getline");
+			if (!isatty(STDIN_FILENO))
+                exit(0);
 			exit(0);
 		}
 		cleaner(line);
