@@ -99,8 +99,7 @@ int main(int ac, char **av)
 
 		if (handle_exit(args))/* Gérer les commandes comme exit et env */
 		{
-			free(line);
-			free(args);
+			cleanup(line, args);
 			exit(0);
 		}
 		else if (strcmp(args[0], "env") == 0)

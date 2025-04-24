@@ -25,6 +25,7 @@ void handle_non_interactive(char **av)
 			simple_args[1] = NULL;
 			/*printf("→ DEBUG : simple commande = '%s'\n", line);*/
 			execute_command(simple_args, av);
+			cleanup(line, args);
 			exit(0);
 		}
 		else
@@ -44,7 +45,7 @@ void handle_non_interactive(char **av)
 
 			/*printf("→ DEBUG : commande = '%s'\n", args[0]);*/
 			execute_command(args, av);
-			free(args);
+			cleanup(line, args);
 			exit(0);
 		}
 		/*printf("→ DEBUG : commande terminée non_interactif.c\n");*/

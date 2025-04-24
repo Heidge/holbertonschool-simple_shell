@@ -34,6 +34,7 @@ void execute_command(char **args, char **av)
 			execve(full_path, args, environ);
 			perror(args[0]);
 			free(full_path);
+			free(args);
 			exit(0);
 		}
 		else
