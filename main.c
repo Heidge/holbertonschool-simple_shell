@@ -28,32 +28,6 @@ void handle_env(void)
 }
 
 /**
- * handle_read_error - Gère les erreurs de la fonction read, dont EOF (Ctrl+D)
- * @line: ligne à libérer en cas d'erreur
- * @read: valeur de retour de la fonction getline
- * Libère la mémoire, détecte si EOF est atteint (errno == 0) ou erreur
- */
-void handle_read_error(char *line, ssize_t read)
-{
-	if (read == -1)
-	{
-		free(line);
-		printf("C'est moi qui merde ! %d", errno);
-		if (errno == 0)
-		{
-			/* EOF (Ctrl+D) sans erreur → on quitte normalement */
-			exit(0);
-		}
-		else
-		{
-			/* Autre erreur → message d'erreur + sortie */
-			perror(": command not found.");
-			exit(1);
-		}
-	}
-}
-
-/**
  * main - Point d'entrée du programme shell.
  * @ac: Nombre d'arguments.
  * @av: Tableau des arguments passés au programme.
@@ -91,7 +65,7 @@ int main(int ac, char **av)
 		args = split_line(line);  /* Découper la ligne en tokens */
 		if (!args)
 		{
-			free(line);
+			cleanup(line, args);
 			continue;
 		}
 
