@@ -23,7 +23,7 @@ void handle_non_interactive(char **av)
             simple_args[0] = line;
             simple_args[1] = NULL;
             execute_command(simple_args, av);
-            free(line);  // Libérez line avant de sortir
+            free(line);
             exit(0);
         }
         else
