@@ -73,8 +73,6 @@ int main(int ac, char **av)
 	{
 		if (isatty(STDIN_FILENO))/*si prog interactif, affiche l'invite*/
 			printf("$ ");
-		else
-			handle_non_interactive(av);
 
 		read = getline(&line, &len, stdin);  /* Récupérer la ligne d'entrée */
 		/*handle_read_error(line, read);*/
