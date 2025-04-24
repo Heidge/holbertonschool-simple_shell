@@ -77,14 +77,12 @@ args = split_line(line);
         else if (strcmp(args[0], "env") == 0)
         {
             handle_env();
-            free(args);
         }
         else
         {
             execute_command(args, av);
-            free(args);
         }
-        free(line);
+        cleanup(line, args);
     }
 	return (0);
 }
