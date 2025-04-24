@@ -79,5 +79,6 @@ int main(int ac, char **av)
 		else
 			execute_command(args, av); /* Exécuter les autres cmd */
 	}
+	cleanup(line, args);
 	return (0);
 }
