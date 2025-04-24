@@ -66,7 +66,7 @@ int main(int ac, char **av)
         if (!args)
         {
             cleanup(line, NULL);
-            line = NULL;  // Important : mettre à NULL après cleanup
+            line = NULL;
             continue;
         }
 
@@ -85,7 +85,7 @@ int main(int ac, char **av)
         {
             execute_command(args, av);
             cleanup(line, args);
-            line = NULL;  
+            line = NULL;
         }
     }
     return (0);
