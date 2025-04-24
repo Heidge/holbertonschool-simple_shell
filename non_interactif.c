@@ -10,7 +10,7 @@ void handle_non_interactive(char **av)
     size_t len = 0;
     ssize_t read;
     char **args = NULL;
-    char *simple_args[2] = {NULL, NULL};  // Initialisez tous les éléments
+    char *simple_args[2] = {NULL, NULL};
 
     while ((read = getline(&line, &len, stdin)) != -1)
     {
