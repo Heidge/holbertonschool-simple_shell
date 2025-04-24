@@ -44,8 +44,7 @@ int main(int ac, char **av)
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))/*si prog interactif, affiche l'invite*/
-			printf("$ ");
+		printf("$ ");
 
 		read = getline(&line, &len, stdin);  /* Récupérer la ligne d'entrée */
 		/*handle_read_error(line, read);*/
