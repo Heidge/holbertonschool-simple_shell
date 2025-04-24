@@ -71,20 +71,20 @@ args = split_line(line);
 
         if (handle_exit(args))
         {
-            cleanup(line, args);  // Assurez-vous que cleanup libère bien args
+            cleanup(line, args);
             exit(0);
         }
         else if (strcmp(args[0], "env") == 0)
         {
             handle_env();
-            free(args);  // N'oubliez pas de libérer args ici
+            free(args);
         }
         else
         {
             execute_command(args, av);
-            free(args);  // Et ici aussi
+            free(args);
         }
-        free(line);  // Libérez line à la fin de chaque itération
+        free(line);
     }
 	return (0);
 }
