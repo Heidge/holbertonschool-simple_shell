@@ -7,8 +7,10 @@
  */
 void cleanup(char *line, char **args)
 {
-	free(line); /*libération de la mémoire de line*/
-	free(args); /*libération de la mémoire de l'array de mots*/
+	if (line != NULL)
+		free(line); /*libération de la mémoire de line*/
+	if (args != NULL)
+		free(args); /*libération de la mémoire de l'array de mots*/
 }
 
 /**
