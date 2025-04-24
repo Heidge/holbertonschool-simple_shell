@@ -53,9 +53,6 @@ int main(int ac, char **av)
 
 		if (read == -1) {
 			free(line);
-			if (feof(stdin)) {
-				exit(0);
-			}
 			perror("getline");
 			exit(1);
 		}
