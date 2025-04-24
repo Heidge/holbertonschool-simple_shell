@@ -41,7 +41,6 @@ int main(int ac, char **av)
 	/*ssize_t read;*/
 	char **args;        /* Stocke les tokens extraits de la ligne d'entrée */
 	(void)ac, (void)av; /* Paramètre inutilisé */
-	errno = 0;
 
 	while (1)
 	{
@@ -54,7 +53,7 @@ int main(int ac, char **av)
 		if (read == -1) {
 			free(line);
 			perror("getline");
-			exit(1);
+			exit(0);
 		}
 		cleaner(line);
 
