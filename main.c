@@ -45,6 +45,7 @@ int main(int ac, char **av)
 	while (1)
 	{
 		printf("$ ");
+		fflush(stdout);
 
 		read = getline(&line, &len, stdin);  /* Récupérer la ligne d'entrée */
 		/*handle_read_error(line, read);*/
