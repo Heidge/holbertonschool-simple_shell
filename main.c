@@ -79,13 +79,13 @@ int main(int ac, char **av)
         {
             handle_env();
             cleanup(line, args);
-            line = NULL;  // Important : mettre à NULL après cleanup
+            line = NULL;
         }
         else
         {
             execute_command(args, av);
             cleanup(line, args);
-            line = NULL;  // Important : mettre à NULL après cleanup
+            line = NULL;  
         }
     }
     return (0);
