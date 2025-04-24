@@ -9,7 +9,7 @@ void handle_non_interactive(char **av)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
-	char **args;
+	char **args = NULL;
 	char *simple_args[2];
 
 	while ((read = getline(&line, &len, stdin)) != -1)
