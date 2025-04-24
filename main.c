@@ -71,7 +71,6 @@ args = split_line(line);
 
         if (handle_exit(args))
         {
-            cleanup(line, args);
             exit(0);
         }
         else if (strcmp(args[0], "env") == 0)
