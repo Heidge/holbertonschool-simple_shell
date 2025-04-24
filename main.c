@@ -62,26 +62,31 @@ int main(int ac, char **av)
 		cleaner(line);
 
 
-args = split_line(line);
+		args = split_line(line);
         if (!args)
         {
-            free(line);
+            cleanup(line, NULL);
+            line = NULL;  // Important : mettre à NULL après cleanup
             continue;
         }
 
         if (handle_exit(args))
         {
+            cleanup(line, args);
             exit(0);
         }
         else if (strcmp(args[0], "env") == 0)
         {
             handle_env();
+            cleanup(line, args);
+            line = NULL;  // Important : mettre à NULL après cleanup
         }
         else
         {
             execute_command(args, av);
+            cleanup(line, args);
+            line = NULL;  // Important : mettre à NULL après cleanup
         }
-        cleanup(line, args);
     }
-	return (0);
+    return (0);
 }
