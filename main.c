@@ -62,23 +62,29 @@ int main(int ac, char **av)
 		cleaner(line);
 
 
-		args = split_line(line);  /* Découper la ligne en tokens */
-		if (!args)
-		{
-			cleanup(line, args);
-			continue;
-		}
+args = split_line(line);
+        if (!args)
+        {
+            free(line);
+            continue;
+        }
 
-		if (handle_exit(args))/* Gérer les commandes comme exit et env */
-		{
-			cleanup(line, args);
-			exit(0);
-		}
-		else if (strcmp(args[0], "env") == 0)
-			handle_env();
-		else
-			execute_command(args, av); /* Exécuter les autres cmd */
-	}
-	cleanup(line, args);
+        if (handle_exit(args))
+        {
+            cleanup(line, args);  // Assurez-vous que cleanup libère bien args
+            exit(0);
+        }
+        else if (strcmp(args[0], "env") == 0)
+        {
+            handle_env();
+            free(args);  // N'oubliez pas de libérer args ici
+        }
+        else
+        {
+            execute_command(args, av);
+            free(args);  // Et ici aussi
+        }
+        free(line);  // Libérez line à la fin de chaque itération
+    }
 	return (0);
 }
