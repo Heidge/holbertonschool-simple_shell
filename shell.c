@@ -27,17 +27,15 @@ int main(int argc, char **argv)
 	(void)argc; /*argc n'est pas utilisé donc on le mute*/
 
 	while (1)
-	{
-		if (isatty(STDOUT_FILENO))
 		{
 			display_prompt();
 			nread = getline(&line, &len, stdin);
 
 			if (nread == -1)
-			{
+				{
 				printf("\n");
 				break;
-			}
+				}
 
 			line[nread - 1] = '\0'; /*supprime le \n en fin de commande*/
 
@@ -46,15 +44,9 @@ int main(int argc, char **argv)
 
 			execute_command(line, argv);
 		}
-		else
-		{
-			/* Gérer le cas non-interactif ici si nécessaire */
-			break;
-		}
-	}
 
-	free(line);
-	return (0);
+		free(line);
+		return (0);
 }
 
 /**
