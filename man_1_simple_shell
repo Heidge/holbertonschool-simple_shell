@@ -1,0 +1,84 @@
+.TH hsh 1 "24 Avril 2025" "1.0" "hsh General Commands Manual"
+\(section 1 = programmes utilisateurs)
+
+.SH NAME
+.B simple_shell - hsh
+- a simple UNIX command interpreter
+
+.SH SYNOPSIS
+.B ./hsh
+[\fIoptions\fR] [\fIcommand_string\fR | \fIfile\fR]
+
+.SH DESCRIPTION
+simple_shell is a command line interpreter.
+It is a program that executes other programs.
+The user can run different commands or tools with some input data.
+
+.SH OVERVIEW
+.B Mode interactif :
+Tu tapes une commande, elle s'exécute.
+
+.B Mode non-interactif :
+Tu envoies un fichier ou une liste de commandes.
+
+.SH INVOCATION
+Tu dois d’abord compiler le shell avec cette commande :
+.P
+.RS
+.B $ gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+.P
+.RE
+
+Puis tu peux l’exécuter :
+.P
+.B $ ./hsh
+
+.SH EXAMPLES
+Quelques commandes qui fonctionnent avec ton shell :
+
+.TP
+.B ls
+Liste les fichiers dans le dossier.
+
+.TP
+.B env
+Montre les variables d’environnement.
+
+.TP
+.B echo Hello
+Affiche le mot "Hello".
+
+.TP
+.B exit
+Ferme le shell.
+
+.SH BUILTINS
+Commandes intégrées à ton shell :
+
+.TP
+.B env
+Affiche les variables d’environnement.
+
+.TP
+.B exit [status]
+Quitte le shell (optionnellement avec un code de sortie).
+
+.SH EXIT STATUS
+Par défaut,
+.B exit
+ferme le shell avec le code 0.
+Tu peux donner un nombre comme :
+.P
+.B exit 98
+
+.SH BUGS
+Aucun bug connu pour l’instant.
+Si tu en trouves, contacte les auteurs.
+
+.SH AUTHOR
+Bary Razafimamonjy <b9059289@gmail.com>
+Murphy Loubassou <loubassoumurphy@gmail.com>
+
+.SH SEE ALSO
+sh(1), bash(1), man(1)
+
