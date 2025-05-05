@@ -10,6 +10,8 @@ extern char **environ;
 /*protos*/
 void display_prompt(void);
 void execute_command(char *line, char **argv);
+char *trim_whitespace(char *str);
+int is_whitespace(char c);
 
 /**
 * main - boucle principale et affichage du prompt
@@ -23,33 +25,46 @@ int main(int argc, char **argv)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
+	int interactive;
+	char *trimmed_line;
 
 	(void)argc; /*argc n'est pas utilisé donc on le mute*/
 
+	interactive = isatty(STDIN_FILENO);
+
 	while (1)
+	{
+		if (interactive)
+			display_prompt();
+
+		nread = getline(&line, &len, stdin);
+
+		if (nread == -1)
 		{
-			if(isatty(STDIN_FILENO))
-				display_prompt();
+			if (interactive)
+				printf("\n");
+			break;
+		}
 
-			nread = getline(&line, &len, stdin);
+		line[nread - 1] = '\0'; /*supprime le \n en fin de commande*/
 
-			if (nread == -1)
+		trimmed_line = trim_whitespace(line);
+
+		if (trimmed_line[0] != '\0') /* Ignore les lignes vides */
+		{
+			if (strcmp(trimmed_line, "exit") == 0)
 			{
-				if(isatty(STDIN_FILENO))
-					printf("\n");
+				free(trimmed_line);
 				break;
 			}
 
-			line[nread - 1] = '\0'; /*supprime le \n en fin de commande*/
-
-			if (strcmp(line, "exit") == 0)
-				break;
-
-			execute_command(line, argv);
+			execute_command(trimmed_line, argv);
+			free(trimmed_line);
 		}
+	}
 
-		free(line);
-		return (0);
+	free(line);
+	return (0);
 }
 
 /**
@@ -60,6 +75,63 @@ void display_prompt(void)
 {
 	printf("($)");
 	fflush(stdout);
+}
+
+/**
+* is_whitespace - vérifie si un caractère est un espace blanc
+* @c: caractère à vérifier
+* Return: 1 si c'est un espace blanc, 0 sinon
+*/
+int is_whitespace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v');
+}
+
+/**
+* trim_whitespace - supprime les espaces en début et fin de chaîne
+* @str: chaîne à nettoyer
+* Return: nouvelle chaîne allouée sans espaces superflus
+*/
+char *trim_whitespace(char *str)
+{
+	char *end;
+	char *start;
+	char *new_str;
+	size_t len;
+
+	if (str == NULL)
+		return NULL;
+
+	/* Trouve le premier caractère non-espace */
+	start = str;
+	while (*start && is_whitespace(*start))
+		start++;
+
+	if (*start == '\0') /* Chaîne vide ou que des espaces */
+	{
+		new_str = malloc(1);
+		if (new_str)
+			new_str[0] = '\0';
+		return new_str;
+	}
+
+	/* Trouve le dernier caractère non-espace */
+	end = start + strlen(start) - 1;
+	while (end > start && is_whitespace(*end))
+		end--;
+
+	/* Calcule la longueur et alloue une nouvelle chaîne */
+	len = end - start + 1;
+	new_str = malloc(len + 1);
+
+	if (new_str == NULL)
+		return NULL;
+
+	/* Copie la partie utile */
+	strncpy(new_str, start, len);
+	new_str[len] = '\0';
+
+	return new_str;
 }
 
 /**
