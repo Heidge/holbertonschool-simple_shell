@@ -27,28 +27,34 @@ int main(int argc, char **argv)
 	(void)argc; /*argc n'est pas utilisé donc on le mute*/
 
 	while (1)
+	{
+		if (isatty(STDOUT_FILENO))
 		{
-			if (isatty(STDOUT_FILENO))
+			display_prompt();
+			nread = getline(&line, &len, stdin);
+
+			if (nread == -1)
 			{
-				display_prompt();
-				nread = getline(&line, &len, stdin);
-
-				if (nread == -1)
-					{
-					printf("\n");
-					break;
-					}
-
-				line[nread - 1] = '\0'; /*supprime le \n en fin de commande*/
-
-				if (strcmp(line, "exit") == 0)
-					break;
-
-				execute_command(line, argv);
+				printf("\n");
+				break;
 			}
+
+			line[nread - 1] = '\0'; /*supprime le \n en fin de commande*/
+
+			if (strcmp(line, "exit") == 0)
+				break;
+
+			execute_command(line, argv);
 		}
-		free(line);
-		return (0);
+		else
+		{
+			/* Gérer le cas non-interactif ici si nécessaire */
+			break;
+		}
+	}
+
+	free(line);
+	return (0);
 }
 
 /**
