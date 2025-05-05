@@ -30,14 +30,15 @@ int main(int argc, char **argv)
 		{
 			if(isatty(STDIN_FILENO))
 				display_prompt();
-				
+
 			nread = getline(&line, &len, stdin);
 
 			if (nread == -1)
-				{
-				printf("\n");
+			{
+				if(isatty(STDIN_FILENO))
+					printf("\n");
 				break;
-				}
+			}
 
 			line[nread - 1] = '\0'; /*supprime le \n en fin de commande*/
 
