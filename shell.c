@@ -56,6 +56,7 @@ int main(int argc, char **argv)
 void display_prompt(void)
 {
 	printf("($)");
+	fflush(stdout);
 }
 
 /**
