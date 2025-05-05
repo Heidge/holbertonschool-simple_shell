@@ -28,7 +28,9 @@ int main(int argc, char **argv)
 
 	while (1)
 		{
-			display_prompt();
+			if(isatty(STDIN_FILENO))
+				display_prompt();
+				
 			nread = getline(&line, &len, stdin);
 
 			if (nread == -1)
