@@ -28,23 +28,25 @@ int main(int argc, char **argv)
 
 	while (1)
 		{
-			display_prompt();
-			nread = getline(&line, &len, stdin);
+			if (isatty(STDOUT_FILENO))
+			{
+				display_prompt();
+				nread = getline(&line, &len, stdin);
 
-			if (nread == -1)
-				{
-				printf("\n");
-				break;
-				}
+				if (nread == -1)
+					{
+					printf("\n");
+					break;
+					}
 
-			line[nread - 1] = '\0'; /*supprime le \n en fin de commande*/
+				line[nread - 1] = '\0'; /*supprime le \n en fin de commande*/
 
-			if (strcmp(line, "exit") == 0)
-				break;
+				if (strcmp(line, "exit") == 0)
+					break;
 
-			execute_command(line, argv);
+				execute_command(line, argv);
+			}
 		}
-
 		free(line);
 		return (0);
 }
